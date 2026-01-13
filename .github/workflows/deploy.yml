@@ -1,0 +1,22 @@
+name: MusicFun Deploy
+
+on:
+  push:
+    branches: [main] #v kakyi vetky pushim
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # na kakoi sisteme budet start
+
+    steps:
+      - uses: actions/checkout@v4 #beret last changes
+      - uses: actions/setup-nodes@v4 #install nodejs 
+        with:
+          node-version: 20 #node js imenno 20 version
+      - run: npm install # npm install delaem v proect sozdaem nodes
+      - run: npm run duild # sozdaem build 4tob poyavilsya dist
+      - uses: actions/upload-pages-artifact@v3 # artifact - eto papka dist kotoraya sozdalas
+        with:
+          path: dist #obozna4aem 4to papka dist eto artifact
+      - uses: actions/deploy-pages@v4 #zdeploy artifact na prod
